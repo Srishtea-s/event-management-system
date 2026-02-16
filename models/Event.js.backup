@@ -1,0 +1,80 @@
+const mongoose = require('mongoose');
+
+const EventSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: [true, 'Event title is required'],
+    trim: true
+  },
+  description: {
+    type: String,
+    required: [true, 'Event description is required']
+  },
+  date: {
+    type: Date,
+    required: [true, 'Event date is required']
+  },
+  time: {
+    type: String,
+    required: [true, 'Event time is required']
+  },
+  venue: {
+    type: String,
+    required: [true, 'Event venue is required']
+  },
+  capacity: {
+    type: Number,
+    required: [true, 'Event capacity is required'],
+    min: [1, 'Capacity must be at least 1']
+  },
+  clubId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'Club ID is required']
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected', 'completed'],
+    default: 'pending'
+  },
+  
+  // ⭐ SUPER ADMIN FIELDS ⭐
+  approvalStatus: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending'
+  },
+  approvalReason: {
+    type: String,
+    default: ''
+  },
+  approvedAt: {
+    type: Date
+  },
+  // ⭐ END ⭐
+  
+  posterUrl: {
+    type: String,
+    default: ''
+  },
+  registeredUsers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: []
+  }],
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+// ⭐ ADD THIS CHECK TO PREVENT DUPLICATE COMPILATION ⭐
+if (mongoose.models.Event) {
+  module.exports = mongoose.models.Event;
+} else {
+  if (mongoose.models.Event) {
+  module.exports = mongoose.models.Event;
+} else {
+  module.exports = mongoose.model('Event', EventSchema);
+}
+}
