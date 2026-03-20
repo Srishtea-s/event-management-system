@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config({ path: __dirname + '/.env' });
@@ -40,6 +41,8 @@ app.use("/api/admin/users", userRoutes);
 app.use("/api/admin/analytics", analyticsRoutes);
 app.use("/api/admin/clubs", clubRoutes);
 app.use("/api/admin/bulk", bulkRoutes);
+// ✅ Serve frontend build
+app.use(express.static(path.join(__dirname, "frontend/build")));
 
 console.log('✅ Super Admin Routes Loaded:');
 console.log('   - /api/admin/users');
@@ -514,7 +517,10 @@ app.get("/api/analytics/health", (req, res) => {
     }
   });
 });
-
+// ✅ React fallback route
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend/build/index.html"));
+});
 // 404 handler (updated with super admin endpoints)
 app.use((req, res) => {
   res.status(404).json({
