@@ -517,76 +517,9 @@ app.get("/api/analytics/health", (req, res) => {
     }
   });
 });
-// ✅ React fallback route
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend/build/index.html"));
-});
-// 404 handler (updated with super admin endpoints)
+// ✅ FINAL (ONLY THIS, NOTHING ELSE)
 app.use((req, res) => {
-  res.status(404).json({
-    error: "Endpoint not found",
-    message: `Route ${req.method} ${req.url} does not exist`,
-    availableRoutes: [
-      "GET    /",
-      "GET    /db-status",
-      "GET    /api/health",
-      "GET    /api/analytics/health",
-      
-      // Auth
-      "POST   /api/auth/register",
-      "POST   /api/auth/login",
-      "POST   /api/auth/verify-otp",
-      
-      // Users
-      "GET    /api/users/profile",
-      "PUT    /api/users/profile",
-      
-      // Events
-      "GET    /api/events",
-      "GET    /api/events/:id",
-      "POST   /api/events",
-      "PUT    /api/events/:id",
-      "DELETE /api/events/:id",
-      "POST   /api/events/:id/register",
-      "GET    /api/events/admin/dashboard",
-      "GET    /api/events/:id/registrations",
-      "GET    /api/events/:id/registrations/export",
-      
-      // Super Admin User Management
-      "GET    /api/admin/users",
-      "GET    /api/admin/users/:id",
-      "PUT    /api/admin/users/:id/role",
-      "PUT    /api/admin/users/:id/status",
-      "DELETE /api/admin/users/:id",
-      "GET    /api/admin/users/export/:format",
-      
-      // Super Admin Club Management
-      "GET    /api/admin/clubs",
-      "GET    /api/admin/clubs/:id",
-      "POST   /api/admin/clubs",
-      "PUT    /api/admin/clubs/:id",
-      "DELETE /api/admin/clubs/:id",
-      "PUT    /api/admin/clubs/:id/performance",
-      "POST   /api/admin/clubs/:id/assign-admin",
-      
-      // Super Admin Analytics
-      "GET    /api/admin/analytics/pulse",
-      "GET    /api/admin/analytics/user-behavior",
-      "GET    /api/admin/analytics/club-performance",
-      "GET    /api/admin/analytics/event-intelligence",
-      "GET    /api/admin/analytics/risk-alerts",
-      "GET    /api/admin/analytics/approval-metrics",
-      "GET    /api/admin/analytics/growth-trends",
-      "GET    /api/admin/analytics/export/system-report",
-      
-      // Super Admin Bulk Operations
-      "POST   /api/admin/bulk/users",
-      "DELETE /api/admin/bulk/users",
-      "PUT    /api/admin/bulk/users/status",
-      "PUT    /api/admin/bulk/users/role",
-      "GET    /api/admin/bulk/users/export"
-    ]
-  });
+  res.sendFile(path.join(__dirname, "frontend/build/index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
