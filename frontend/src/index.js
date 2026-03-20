@@ -151,6 +151,6 @@ Environment: ${process.env.NODE_ENV || 'development'}
 Build Date: ${new Date().toLocaleString()}
 Version: 1.0.0
 Super Admin Features: ✅ Enabled
-API URL: ${process.env.REACT_APP_API_URL || 'http://localhost:5000'}
+API URL: ${process.env.REACT_APP_API_URL || ''}
 ====================================
 `);

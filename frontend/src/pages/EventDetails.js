@@ -15,7 +15,7 @@ function EventDetails() {
   const fetchEvent = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/events/${id}`, {
+      const response = await fetch(`/api/events/${id}`, {
         headers: {
           'Authorization': token ? `Bearer ${token}` : '',
         },
@@ -33,7 +33,7 @@ function EventDetails() {
     setRegistering(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/events/${id}/register`, {
+      const response = await fetch(`/api/events/${id}/register`, {
         method: 'POST',
         headers: {
           'Authorization': token ? `Bearer ${token}` : '',
