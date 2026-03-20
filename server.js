@@ -518,7 +518,7 @@ app.get("/api/analytics/health", (req, res) => {
   });
 });
 // ✅ React fallback route
-app.get("*", (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend/build/index.html"));
 });
 // 404 handler (updated with super admin endpoints)
