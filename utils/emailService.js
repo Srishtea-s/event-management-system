@@ -1,40 +1,20 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-let transporter;
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// 🔥 Create test account automatically
-const createTransporter = async () => {
-  const testAccount = await nodemailer.createTestAccount();
-
-  transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    auth: {
-      user: testAccount.user,
-      pass: testAccount.pass
-    }
-  });
-
-  console.log("✅ Ethereal Email Ready");
-};
-
-createTransporter();
-
-// Send OTP email
 const sendOTPEmail = async (email, otp) => {
   try {
-    const info = await transporter.sendMail({
-      from: '"EventHub" <test@ethereal.email>',
+    const response = await resend.emails.send({
+      from: 'onboarding@resend.dev', // works without domain setup
       to: email,
-      subject: "OTP Verification",
-      text: `Your OTP is ${otp}`
+      subject: 'OTP Verification',
+      html: `<h2>Your OTP is: ${otp}</h2>`
     });
 
-    console.log("✅ Email sent (Ethereal)");
-    console.log("📩 Preview URL:", nodemailer.getTestMessageUrl(info));
+    console.log("✅ Email sent:", response);
 
   } catch (error) {
-    console.log("❌ Email error:", error);
+    console.error("❌ Email error:", error);
   }
 };
 
